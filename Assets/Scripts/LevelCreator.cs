@@ -78,8 +78,10 @@ public class LevelCreator : MonoBehaviour
             trayBlock.name = trayData.color.ToString();
             trayBlock.transform.parent = _baseMapTransform;
             Rigidbody rb = trayBlock.AddComponent<Rigidbody>();
-            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+            rb.linearDamping = 5f;
             rb.isKinematic = true;
 
             List<Vector2Int> placementPoints = Element.BlockTiles(trayData.elementBlockStr);
