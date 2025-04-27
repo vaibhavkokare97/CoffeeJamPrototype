@@ -3,6 +3,16 @@ using UnityEngine;
 public class Interaction : MonoBehaviour
 {
     public static TrayBlock activeTrayBlock = null;
+    private static GameObject interactPointObj;
+
+    private void Awake()
+    {
+        interactPointObj = new GameObject();
+        Rigidbody rb = interactPointObj.AddComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        rb.mass = 100000f;
+        rb.linearDamping = 10000f;
+    }
 
     void Update()
     {
@@ -23,6 +33,7 @@ public class Interaction : MonoBehaviour
             if (activeTrayBlock != null)
             {
                 activeTrayBlock.rigidbody.isKinematic = true;
+                activeTrayBlock.hingeJoint.connectedBody = null;
                 activeTrayBlock.SnapToClosest();
                 activeTrayBlock = null;
             }
@@ -38,11 +49,12 @@ public class Interaction : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("floor", "tray")))
             {
-                Vector3 directionToMouse = hit.point - activeTrayBlock.rigidbody.worldCenterOfMass;
-                float distance = directionToMouse.magnitude;
-                float strength = Mathf.Lerp(0, 2000f, distance / 20f);
-                Vector3 force = directionToMouse.normalized * strength;
-                activeTrayBlock.rigidbody.AddForce(force, ForceMode.Force);
+
+                Vector3 targetPosition = hit.point;
+                Vector3 currentPosition = activeTrayBlock.rigidbody.worldCenterOfMass;
+
+                interactPointObj.transform.position = hit.point;
+                activeTrayBlock.hingeJoint.connectedBody = interactPointObj.GetComponent<Rigidbody>();
             }
         }
     }

@@ -16,6 +16,7 @@ public class LevelCreator : MonoBehaviour
         {
             CreateTrayBlocks();
             CreateWalls(levelData.lengthX, levelData.lengthY);
+            CameraManager.Instance.ResetCamera(levelData.lengthX, levelData.lengthY);
         }
 
     }

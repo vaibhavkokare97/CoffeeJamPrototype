@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LevelData1
   m_EditorClassIdentifier: 
   lengthX: 5
-  lengthY: 4
+  lengthY: 7
   trayDatas:
   - elementBlockStr: 01,02,03
     color: {r: 0.89433956, g: 0.08605907, b: 0.08605907, a: 0}

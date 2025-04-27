@@ -6,11 +6,13 @@ public class TrayBlock : MonoBehaviour
 {
     public Dictionary<Vector2Int, GameObject> trayBlocks = new Dictionary<Vector2Int, GameObject>();
     public new Rigidbody rigidbody;
+    public new HingeJoint hingeJoint;
     public Color color;
 
     private void Start()
     {
         rigidbody = gameObject.AddComponent<Rigidbody>();
+        hingeJoint = gameObject.AddComponent<HingeJoint>();
         rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
         rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
