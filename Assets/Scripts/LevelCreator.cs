@@ -74,23 +74,20 @@ public class LevelCreator : MonoBehaviour
     {
         foreach (var trayData in levelData.trayDatas)
         {
-            GameObject trayBlock = new GameObject();
-            trayBlock.name = trayData.color.ToString();
-            trayBlock.transform.parent = _baseMapTransform;
-            Rigidbody rb = trayBlock.AddComponent<Rigidbody>();
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
-            rb.linearDamping = 5f;
-            rb.isKinematic = true;
+            GameObject g = new GameObject();
+            g.name = trayData.color.ToString();
+            g.transform.parent = _baseMapTransform;
+
+            TrayBlock trayBlock = g.AddComponent<TrayBlock>();
+            trayBlock.color = trayData.color;
 
             List<Vector2Int> placementPoints = Element.BlockTiles(trayData.elementBlockStr);
             foreach (var placementPoint in placementPoints)
             {
-                GameObject g = Instantiate(_trayBlockPrefab, new Vector3(placementPoint.x, 0, placementPoint.y), Quaternion.identity, trayBlock.transform);
-                g.GetComponent<Renderer>().materials[0].color = trayData.color;
-                g.GetComponent<Renderer>().materials[1].color = trayData.color;
+                GameObject trayBlockGameObject = Instantiate(_trayBlockPrefab, new Vector3(placementPoint.x, 0, placementPoint.y), Quaternion.identity, g.transform);
+                trayBlock.trayBlocks.Add(placementPoint, trayBlockGameObject);
             }
+            trayBlock.Initiate();
         }
     }
 }

@@ -21,3 +21,6 @@ MonoBehaviour:
   - elementBlockStr: 11,12,13
     color: {r: 0.34146163, g: 0.89411765, b: 0.086274505, a: 0}
     blockedTiles: []
+  - elementBlockStr: 31,32,33,21
+    color: {r: 0.086274505, g: 0.5276371, b: 0.89411765, a: 0}
+    blockedTiles: []
